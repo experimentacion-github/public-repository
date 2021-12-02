@@ -1,0 +1,17 @@
+name: Tests
+
+on: [push]
+
+jobs:
+  unit-tests3_8:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: pip install .
+      - run: pip install pytest==5.4.3 pytest-codestyle==2.0.1 pytest-pydocstyle==2.2.0 pytest-cov==2.11.1
+      - run: pytest .
+      - uses: actions/upload-artifact@v2
+        with:
+          name: coverage-report
+          path: cover/
+          retention-days: 1
