@@ -58,3 +58,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      - run: report.xml cover/
+      - uses: actions/upload-artifact@v2
+        with:
+          name: coverage-report
+          path: cover/
+          retention-days: 1
