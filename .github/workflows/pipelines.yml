@@ -52,7 +52,7 @@ jobs:
       - name: Set up Python 3.9
         uses: actions/setup-python@v2
         with:
-        python-version: 3.9
+          python-version: 3.9
       - run: pip install .
       - run: pip install pytest==5.4.3 pytest-codestyle==2.0.1 pytest-pydocstyle==2.2.0 pytest-cov==2.11.1
       - run: pytest .
