@@ -6,6 +6,11 @@ def make_me_feel_bad():
     return "Tomorrow is Monday... :("
 
 
+# Duplicated lines
+def make_me_feel_very_bad():
+    return "Tomorrow is Monday... :("
+
+
 def day_evaluator(day):
     if day in ["Monday", "Tuesday"]:
         return 2
