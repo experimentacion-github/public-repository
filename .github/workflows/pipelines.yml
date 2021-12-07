@@ -3,18 +3,22 @@ name: Tests
 on: [push, pull_request]
 
 jobs:
-  # unit-tests3_8:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - run: pip install .
-  #     - run: pip install pytest==5.4.3 pytest-codestyle==2.0.1 pytest-pydocstyle==2.2.0 pytest-cov==2.11.1
-  #     - run: pytest .
-  #     - uses: actions/upload-artifact@v2
-  #       with:
-  #         name: coverage-report
-  #         path: cover/
-  #         retention-days: 1
+  unit-tests3_8:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - run: pip install .
+      - run: pip install pytest==5.4.3 pytest-codestyle==2.0.1 pytest-pydocstyle==2.2.0 pytest-cov==2.11.1
+      - run: pytest .
+      - uses: actions/upload-artifact@v2
+        with:
+          name: coverage-report
+          path: cover/
+          retention-days: 1
 
   # codecov:
   #   runs-on: ubuntu-latest
@@ -42,31 +46,31 @@ jobs:
   #       uses: codecov/codecov-action@v2
   #       with:
   #         verbose: true
-  sonarcloud:
-    name: SonarCloud
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-      - name: Set up Python 3.9
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.9
-      - run: pip install .
-      - run: pip install pytest==5.4.3 pytest-codestyle==2.0.1 pytest-pydocstyle==2.2.0 pytest-cov==2.11.1
-      - run: pytest .
-      - run: ls
-      - run: pwd
-      - run: cp report.xml samplepackage/
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      - run: cp report.xml cover/
-      - uses: actions/upload-artifact@v2
-        with:
-          name: coverage-report
-          path: cover/
-          retention-days: 1
+  # sonarcloud:
+  #   name: SonarCloud
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #       with:
+  #         fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+  #     - name: Set up Python 3.9
+  #       uses: actions/setup-python@v2
+  #       with:
+  #         python-version: 3.9
+  #     - run: pip install .
+  #     - run: pip install pytest==5.4.3 pytest-codestyle==2.0.1 pytest-pydocstyle==2.2.0 pytest-cov==2.11.1
+  #     - run: pytest .
+  #     - run: ls
+  #     - run: pwd
+  #     - run: cp report.xml samplepackage/
+  #     - name: SonarCloud Scan
+  #       uses: SonarSource/sonarcloud-github-action@master
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+  #         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  #     - run: cp report.xml cover/
+  #     - uses: actions/upload-artifact@v2
+  #       with:
+  #         name: coverage-report
+  #         path: cover/
+  #         retention-days: 1
