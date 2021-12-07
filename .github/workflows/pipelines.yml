@@ -58,6 +58,7 @@ jobs:
       - run: pytest .
       - run: ls
       - run: pwd
+      - run: cp report.xml samplepackage/
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
