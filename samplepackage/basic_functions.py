@@ -76,7 +76,6 @@ def high_complexity():
     return True
 
 
-
 def day_evaluator(day):
     if day in ["Monday", "Tuesday"]:
         return 2
