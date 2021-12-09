@@ -22,13 +22,21 @@ jobs:
       - name: Write cov
         run: |
           echo ${{ github.event_name }}
+          green_point=$'\U0001F7E2'
           coverage=$(cat salida.txt | grep 'TOTAL\s\+[0-9]\+\s\+[0-9]\+\s\+\([0-9]\{1,3\}\.\?\%\)$' | grep -o '[0-9]\{1,3\}\%')
           echo ${coverage}
+
           curl --request POST \
           --url https://api.github.com/repos/experimentacion-github/public-repository/statuses/${{ github.event.pull_request.head.sha }} \
           --header 'authorization: Bearer ${{ secrets.PERSONAL_TOKEN }}' \
           --header 'Accept: application/vnd.github.v3+json' \
           --data '{"state": "success", "description": "'"$coverage"'", "context": "code-cov"}'
+
+          curl --request POST \
+          --url https://api.github.com/repos/experimentacion-github/public-repository/issues/${{ github.event.pull_request.number }}/comments \
+          --header 'authorization: Bearer ${{ secrets.PERSONAL_TOKEN}}' \
+          --header 'Accept: application/vnd.github.v3+json' \
+          --data '{"body": "'"$green_point $coverage Coverage"'"}'
         # if: github.event_name == 'pull_request'
       - name: Write comment
         run: |
