@@ -27,7 +27,7 @@ jobs:
           echo ${coverage}
           curl --request POST \
           --url https://api.github.com/repos/experimentacion-github/sample-repository/statuses/${{ github.event.pull_request.head.sha }} \
-          --header 'authorization: Bearer ${{ secrets.GITHUBL_TOKEN }}' \
+          --header 'authorization: Bearer ${{ secrets.PERSONAL_TOKEN }}' \
           --header 'Accept: application/vnd.github.v3+json' \
           --data '{"state": "success", "description": "${coverage}", "context": "code-cov"}'
       - uses: actions/upload-artifact@v2
