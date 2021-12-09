@@ -27,7 +27,7 @@ jobs:
           --url https://api.github.com/repos/experimentacion-github/public-repository/statuses/${{ github.event.pull_request.head.sha }} \
           --header 'authorization: Bearer ${{ secrets.PERSONAL_TOKEN }}' \
           --header 'Accept: application/vnd.github.v3+json' \
-          --data '{"state": "success", "description": "40", "context": "code-cov"}'
+          --data '{"state": "success", "description": "${coverage}", "context": "code-cov"}'
         # if: github.event_name == 'pull_request'
       # - uses: actions/upload-artifact@v2
       #   with:
