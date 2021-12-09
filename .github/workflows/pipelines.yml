@@ -1,6 +1,6 @@
 name: Tests
 
-on: [push, pull_request]
+on: [push]
 
 jobs:
   unit-tests3_8:
@@ -14,24 +14,24 @@ jobs:
       - run: pip install .
       - run: pip install pytest==5.4.3 pytest-codestyle==2.0.1 pytest-pydocstyle==2.2.0 pytest-cov==2.11.1
       - run: pytest .
-      - run: pytest . | grep 'TOTAL\s\+[0-9]\+\s\+[0-9]\+\s\+\([0-9]\{1,3\}\.\?\%\)$'
-      - run: pytest . 2>&1 | tee salida.txt
-      - run: ls
-      - run: cat salida.txt
+      # - run: pytest . | grep 'TOTAL\s\+[0-9]\+\s\+[0-9]\+\s\+\([0-9]\{1,3\}\.\?\%\)$'
+      # - run: pytest . 2>&1 | tee salida.txt
+      # - run: ls
+      # - run: cat salida.txt
       # - run: |
       #     tty=$(readlink /proc/$$/fd/2)
       #     read pytest . | tee /dev/tty | grep 'TOTAL\s\+[0-9]\+\s\+[0-9]\+\s\+\([0-9]\{1,3\}\.\?\%\)$' | grep -o '[0-9]\{1,3\}\%' < $tty
       # - run: pytest . | tee /dev/tty | grep 'TOTAL\s\+[0-9]\+\s\+[0-9]\+\s\+\([0-9]\{1,3\}\.\?\%\)$' | grep -o '[0-9]\{1,3\}\%'
-      - run: |
-          echo ${{ github.event_name }}
-          coverage=$(cat salida.txt | grep 'TOTAL\s\+[0-9]\+\s\+[0-9]\+\s\+\([0-9]\{1,3\}\.\?\%\)$' | grep -o '[0-9]\{1,3\}\%')
-          echo ${coverage}
-          curl --request POST \
-          --url https://api.github.com/repos/experimentacion-github/sample-repository/statuses/${{ github.event.pull_request.head.sha }} \
-          --header 'authorization: Bearer ${{ secrets.PERSONAL_TOKEN }}' \
-          --header 'Accept: application/vnd.github.v3+json' \
-          --data '{"state": "success", "description": "40", "context": "code-cov"}'
-        if: github.event_name == 'pull_request'
+      # - run: |
+      #     echo ${{ github.event_name }}
+      #     coverage=$(cat salida.txt | grep 'TOTAL\s\+[0-9]\+\s\+[0-9]\+\s\+\([0-9]\{1,3\}\.\?\%\)$' | grep -o '[0-9]\{1,3\}\%')
+      #     echo ${coverage}
+      #     curl --request POST \
+      #     --url https://api.github.com/repos/experimentacion-github/sample-repository/statuses/${{ github.event.pull_request.head.sha }} \
+      #     --header 'authorization: Bearer ${{ secrets.PERSONAL_TOKEN }}' \
+      #     --header 'Accept: application/vnd.github.v3+json' \
+      #     --data '{"state": "success", "description": "40", "context": "code-cov"}'
+      #   if: github.event_name == 'pull_request'
       - uses: actions/upload-artifact@v2
         with:
           name: coverage-report
