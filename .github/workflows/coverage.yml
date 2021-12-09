@@ -1,5 +1,5 @@
-name: Pull request coverage
-on: [pull_request]
+name: Pull request coverage (Push)
+on: [push]
 
 jobs:
   unit-tests3_8:
