@@ -34,11 +34,11 @@ jobs:
         run: |
           bell= $'\360\237\224\224'
           echo ${bell}
-          curl --request POST \
-          --url https://api.github.com/repos/experimentacion-github/public-repository/issues/${{ github.event.pull_request.number }}/comments \
-          --header 'authorization: Bearer ${{ secrets.PERSONAL_TOKEN}}' \
-          --header 'Accept: application/vnd.github.v3+json' \
-          --data '{"body": "'"$bell Otro comentario de prueba"'"}'
+          # curl --request POST \
+          # --url https://api.github.com/repos/experimentacion-github/public-repository/issues/${{ github.event.pull_request.number }}/comments \
+          # --header 'authorization: Bearer ${{ secrets.PERSONAL_TOKEN}}' \
+          # --header 'Accept: application/vnd.github.v3+json' \
+          # --data '{"body": "'"$bell Otro comentario de prueba"'"}'
       # - uses: actions/upload-artifact@v2
       #   with:
       #     name: coverage-report
