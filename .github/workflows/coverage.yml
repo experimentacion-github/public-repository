@@ -36,7 +36,7 @@ jobs:
           --url https://api.github.com/repos/experimentacion-github/public-repository/issues/${{ github.event.pull_request.number }}/comments \
           --header 'authorization: Bearer ${{ secrets.PERSONAL_TOKEN}}' \
           --header 'Accept: application/vnd.github.v3+json' \
-          --data '{"body": "Comentario de prueba"}'
+          --data '{"body": "'"$'\360\237\224\224'Otro comentario de prueba"'"'}'
       # - uses: actions/upload-artifact@v2
       #   with:
       #     name: coverage-report
