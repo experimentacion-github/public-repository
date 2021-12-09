@@ -23,13 +23,15 @@ jobs:
       #     read pytest . | tee /dev/tty | grep 'TOTAL\s\+[0-9]\+\s\+[0-9]\+\s\+\([0-9]\{1,3\}\.\?\%\)$' | grep -o '[0-9]\{1,3\}\%' < $tty
       # - run: pytest . | tee /dev/tty | grep 'TOTAL\s\+[0-9]\+\s\+[0-9]\+\s\+\([0-9]\{1,3\}\.\?\%\)$' | grep -o '[0-9]\{1,3\}\%'
       - run: |
+          echo ${{ github.event_name }}
           coverage=$(cat salida.txt | grep 'TOTAL\s\+[0-9]\+\s\+[0-9]\+\s\+\([0-9]\{1,3\}\.\?\%\)$' | grep -o '[0-9]\{1,3\}\%')
           echo ${coverage}
           curl --request POST \
           --url https://api.github.com/repos/experimentacion-github/sample-repository/statuses/${{ github.event.pull_request.head.sha }} \
           --header 'authorization: Bearer ${{ secrets.PERSONAL_TOKEN }}' \
           --header 'Accept: application/vnd.github.v3+json' \
-          --data '{"state": "success", "description": "${coverage}", "context": "code-cov"}'
+          --data '{"state": "success", "description": "40", "context": "code-cov"}'
+        if: github.event_name != 'pull_request'
       - uses: actions/upload-artifact@v2
         with:
           name: coverage-report
